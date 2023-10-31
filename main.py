@@ -1,4 +1,3 @@
-
 def printBoard(xState, zState):
     zero = 'X' if xState[0] else ('O' if zState[0] else 0)
     one = 'X' if xState[1] else ('O' if zState[1] else 1)
@@ -16,22 +15,40 @@ def printBoard(xState, zState):
     print(f"--|---|---")
     print(f"{six} | {seven} | {eight} ")
 
+    # f"{X} | {X} | {two} "
+    # f"--  |---  |---"
+    # f"{O} | {O} | {O} "
+    # f"--  |---  |---"
+    # f"{six} | {seven} | {X} "
+
 
 def sum(a, b, c):
-    return a+b+c
+    return a + b + c
 
 
 def checkWin(xState, zState):
     wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
             [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    x_win = None
+    y_win = None
     for win in wins:
         if (sum(xState[win[0]], xState[win[1]], xState[win[2]]) == 3):
             print("X Won the match")
-            return 1
+            x_win = 1
         if (sum(zState[win[0]], zState[win[1]], zState[win[2]]) == 3):
             print("Y Won the match")
-            return 0
-        return -1
+            y_win = 0
+
+    if (x_win is not None) and (y_win is not None):
+        raise Exception()
+
+    if x_win is not None:
+        return x_win
+
+    if y_win is not None:
+        return y_win
+
+    return -1
 
 
 if __name__ == "__main__":
@@ -51,7 +68,7 @@ if __name__ == "__main__":
             value = int(input("Please enter a value: "))
             zState[value] = 1
         cWin = checkWin(xState, zState)
-        if (cWin != -1):
+        if cWin in [0, 1]:
             break
         turn = 1 - turn
         # break
